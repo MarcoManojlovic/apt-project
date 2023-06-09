@@ -201,15 +201,13 @@ public class PatientSwingView extends JFrame implements PatientView {
 		
 		btnDelete = new JButton("Delete Selected");
 		btnDelete.setEnabled(false);
-		btnDelete.addActionListener((new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-            	if (!listSearchedPatients.isSelectionEmpty()) {
-            		hospitalController.deletePatient(listSearchedPatients.getSelectedValue());
-            	} else {
-            		hospitalController.deletePatient(listPatients.getSelectedValue());
-            	}
-            }}));
+		btnDelete.addActionListener(e -> {
+            if (!listSearchedPatients.isSelectionEmpty()) {
+            	hospitalController.deletePatient(listSearchedPatients.getSelectedValue());
+            } else {
+            	hospitalController.deletePatient(listPatients.getSelectedValue());
+            }
+        });
 		
 		contentPane.add(btnDelete, "3, 28, 3, 1");
 		
@@ -230,10 +228,11 @@ public class PatientSwingView extends JFrame implements PatientView {
 		});		
 	
 		listPatients.addListSelectionListener(
-				e -> btnDelete.setEnabled(listPatients.getSelectedIndex() != -1));
-		listPatients.addListSelectionListener(
-				e -> listSearchedPatients.clearSelection());	
-		
+				e -> {
+						btnDelete.setEnabled(listPatients.getSelectedIndex() != -1);
+						listSearchedPatients.clearSelection();
+				});	
+
 		listPatients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPatients.setName("patientList");
 		scrollPane.setViewportView(listPatients);
@@ -245,9 +244,10 @@ public class PatientSwingView extends JFrame implements PatientView {
 		listSearchedPatients = new JList<>(listSearchedPatientsModel);
 		listSearchedPatients.setName("searchedPatientsList");
 		listSearchedPatients.addListSelectionListener(
-				e -> btnDelete.setEnabled(listSearchedPatients.getSelectedIndex() != -1));
-		listSearchedPatients.addListSelectionListener(
-				e -> listPatients.clearSelection());
+				e -> {
+						btnDelete.setEnabled(listSearchedPatients.getSelectedIndex() != -1);
+						listPatients.clearSelection();
+				});
 
 		listSearchedPatients.setCellRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -282,7 +282,6 @@ public class PatientSwingView extends JFrame implements PatientView {
 	@Override
 	public void showError(String message, Patient patient) {
 		lblErrorMessage.setText(message + ": " + getDisplayString(patient));
-		
 	}
 
 	@Override
@@ -309,9 +308,16 @@ public class PatientSwingView extends JFrame implements PatientView {
 	}
 
 	@Override
+	public void showErrorPatientNotFound(String message, Patient patient) {
+		lblErrorMessage.setText(message + ": " + getDisplayString(patient));
+		listSearchedPatientsModel.removeAllElements();
+		listPatientsModel.removeElement(patient);
+	}
+
+	@Override
 	public void showErrorPatientNotFound(String message) {
 		lblErrorMessage.setText(message);
 		listSearchedPatientsModel.removeAllElements();
 	}
-	
+
 }

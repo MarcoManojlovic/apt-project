@@ -96,7 +96,8 @@ public class HospitalControllerTest {
 			thenReturn(null);
 		HospitalController.deletePatient(patient);
 		verify(patientView)
-			.showErrorPatientNotFound("No existing patient with id 1");
+			.showErrorPatientNotFound("No existing patient with id 1",
+					patient);
 		verifyNoMoreInteractions(ignoreStubs(patientRepository));
 	}
 
