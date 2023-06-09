@@ -52,4 +52,5 @@ public class HospitalController {
 
 		patientView.showSearchedPatients(patients);
 	}
+	
 }
