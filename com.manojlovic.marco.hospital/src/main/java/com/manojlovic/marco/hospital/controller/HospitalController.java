@@ -35,7 +35,8 @@ public class HospitalController {
 	public void deletePatient(Patient patient) {
 		Patient existingPatient = patientRepository.findById(patient.getId());
 		if (existingPatient == null) {
-			patientView.showErrorPatientNotFound("No existing patient with id " + patient.getId());
+			patientView.showErrorPatientNotFound("No existing patient with id " + patient.getId(),
+					patient);
 			return;
 		}
 
