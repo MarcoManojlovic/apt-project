@@ -130,16 +130,16 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add")).requireDisabled();
 	}
 
-	@Test
-	public void testWhenSearchNameIsNonEmptyThenSearchButtonShouldBeEnabled() {
-		window.textBox("searchNameTextBox").enterText("test");
-		window.button(JButtonMatcher.withText("Search")).requireEnabled();
-	}
-	
 	private void resetTextFields(JTextComponentFixture idTextBox, JTextComponentFixture nameTextBox, JTextComponentFixture recoveryDateTextBox) {
 		idTextBox.setText("");
 		nameTextBox.setText("");
 		recoveryDateTextBox.setText("");
+	}
+
+	@Test
+	public void testWhenSearchNameIsNonEmptyThenSearchButtonShouldBeEnabled() {
+		window.textBox("searchNameTextBox").enterText("test");
+		window.button(JButtonMatcher.withText("Search")).requireEnabled();
 	}
 
 	@Test
@@ -196,20 +196,10 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 	public void testPatientRemovedShouldRemoveThePatientFromTheListsAndResetTheErrorLabel() {
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
-		GuiActionRunner.execute(
-			() -> {
-				DefaultListModel<Patient> listPatientsModel = patientSwingView.getListPatientsModel();
-				DefaultListModel<Patient> listsearchedPatientsModel = patientSwingView.getListSearchedPatientsModel();
-				listPatientsModel.addElement(patient1);
-				listPatientsModel.addElement(patient2);
-				listsearchedPatientsModel.addElement(patient1);
-				listsearchedPatientsModel.addElement(patient2);			
-			}
-		);
 
+		setLists(patient1, patient2);
 		GuiActionRunner.execute(
-			() ->
-			patientSwingView.patientRemoved(new Patient("1", "test1", "10/02/2023"))
+			() -> patientSwingView.patientRemoved(patient1)
 		);
 
 		String[] listPatientContents = window.list("patientList").contents();
@@ -229,39 +219,29 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 	}
 
 	@Test
-	public void testDeleteButtonWhenSelectedPatientsAreDifferentShouldThrowError() {
+	public void testSelectionShouldBeEnableOneAtATime() {
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
-		
 		setLists(patient1, patient2);
+	
 		window.list("patientList").selectItem(0);
-		window.list("searchedPatientsList").selectItem(1);
-		window.button(JButtonMatcher.withText("Delete Selected")).click();
-		window.label("errorMessageLabel").requireText("Selected patients are different");
-	}
+		window.list("searchedPatientsList").requireNoSelection();
 
-	@Test
-	public void testDeleteButtonWhenSelectedPatientsAreEqualShouldDelegateToHospitalControllerDeletePatient() {
-		Patient patient1 = new Patient("1", "test1", "10/02/2023");
-		Patient patient2 = new Patient("2", "test2", "10/02/2023");
-		
-		setLists(patient1, patient2);
-		window.list("patientList").selectItem(0);
+		window.list("patientList").clearSelection();
 		window.list("searchedPatientsList").selectItem(0);
-		window.button(JButtonMatcher.withText("Delete Selected")).click();
-		verify(hospitalController).deletePatient(patient1);
+		window.list("patientList").requireNoSelection();
 	}
-
+	
 	@Test
-	public void testDeleteButtonWhenOnlyOnePatientIsSelectedShouldDelegateToHospitalControllerDeletePatient() {
+	public void testDeleteButtonWhenAPatientIsSelectedShouldDelegateToHospitalControllerDeletePatient() {
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
-		
+
 		setLists(patient1, patient2);
 		window.list("patientList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
 		verify(hospitalController).deletePatient(patient1);
-		
+
 		window.list("patientList").clearSelection();
 		setLists(patient1, patient2);
 		window.list("searchedPatientsList").selectItem(1);
@@ -299,7 +279,6 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 				() -> patientSwingView.showSearchedPatients(asList(patient2)));
 		listContents = window.list("searchedPatientsList").contents();
 		assertThat(listContents).containsExactly("2 - test2 - 10/02/2023");
-		window.label("errorMessageLabel").requireText(" ");
 	}
 
 	@Test
