@@ -204,18 +204,13 @@ public class PatientSwingView extends JFrame implements PatientView {
 		btnDelete.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-            	if (listPatients.getSelectedValue() == listSearchedPatients.getSelectedValue()) {
-            		hospitalController.deletePatient(listPatients.getSelectedValue());
-            	} else if (!listSearchedPatients.isSelectionEmpty() && listPatients.isSelectionEmpty()) {
+            	if (!listSearchedPatients.isSelectionEmpty()) {
             		hospitalController.deletePatient(listSearchedPatients.getSelectedValue());
-            	} else if (!listPatients.isSelectionEmpty() && listSearchedPatients.isSelectionEmpty()) {
-            		hospitalController.deletePatient(listPatients.getSelectedValue());
             	} else {
-            		showErrorPatientNotFound("Selected patients are different");
+            		hospitalController.deletePatient(listPatients.getSelectedValue());
             	}
-            }
-        }));
-		//		e -> hospitalController.deletePatient(listPatients.getSelectedValue()));
+            }}));
+		
 		contentPane.add(btnDelete, "3, 28, 3, 1");
 		
 		
@@ -233,8 +228,12 @@ public class PatientSwingView extends JFrame implements PatientView {
 					index, isSelected, cellHasFocus);
 			}
 		});		
+	
 		listPatients.addListSelectionListener(
 				e -> btnDelete.setEnabled(listPatients.getSelectedIndex() != -1));
+		listPatients.addListSelectionListener(
+				e -> listSearchedPatients.clearSelection());	
+		
 		listPatients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPatients.setName("patientList");
 		scrollPane.setViewportView(listPatients);
@@ -247,6 +246,9 @@ public class PatientSwingView extends JFrame implements PatientView {
 		listSearchedPatients.setName("searchedPatientsList");
 		listSearchedPatients.addListSelectionListener(
 				e -> btnDelete.setEnabled(listSearchedPatients.getSelectedIndex() != -1));
+		listSearchedPatients.addListSelectionListener(
+				e -> listPatients.clearSelection());
+
 		listSearchedPatients.setCellRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
@@ -283,12 +285,6 @@ public class PatientSwingView extends JFrame implements PatientView {
 		
 	}
 
-/*	@Override
-	public void showErrorSinglePatientNotFound(String message) {
-		lblErrorMessage.setText(message);
-		listSinglePatientModel.removeAllElements();
-	}
-*/
 	@Override
 	public void patientAdded(Patient patient) {
 		listPatientsModel.addElement(patient);
@@ -304,12 +300,6 @@ public class PatientSwingView extends JFrame implements PatientView {
 		resetErrorLabel();
 	}
 
-/*	@Override
-	public void showErrorPatientNotFound(String message, Patient patient) {
-		lblErrorMessage.setText(message + ": " + getDisplayString(patient));
-		listPatientsModel.removeElement(patient);
-	}
-*/
 	private void resetErrorLabel() {
 		lblErrorMessage.setText(" ");
 	}
