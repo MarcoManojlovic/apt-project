@@ -25,8 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -277,6 +275,7 @@ public class PatientSwingView extends JFrame implements PatientView {
 	public void showSearchedPatients(List<Patient> patients) {
 		listSearchedPatientsModel.removeAllElements();
 		patients.stream().forEach(listSearchedPatientsModel::addElement);
+		resetErrorLabel();
 	}
 
 	@Override

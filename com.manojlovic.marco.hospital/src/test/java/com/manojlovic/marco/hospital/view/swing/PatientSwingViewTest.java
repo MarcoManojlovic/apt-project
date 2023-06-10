@@ -143,7 +143,7 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 	}
 
 	@Test
-	public void testDeleteButtonShouldBeEnabledOnlyWhenAPatientIsSelectedFromTheLists() {
+	public void testDeleteButtonShouldBeEnabledOnlyWhenAPatientIsSelectedFromOneOfTheLists() {
 		GuiActionRunner.execute(() -> patientSwingView.getListPatientsModel().addElement(new Patient("1", "test", "10/02/2023")));
 		window.list("patientList").selectItem(0);
 		JButtonFixture deleteButton = window.button(JButtonMatcher.withText("Delete Selected"));
@@ -241,8 +241,8 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.list("patientList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
 		verify(hospitalController).deletePatient(patient1);
-
 		window.list("patientList").clearSelection();
+
 		setLists(patient1, patient2);
 		window.list("searchedPatientsList").selectItem(1);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
@@ -266,7 +266,8 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 	}
 
 	@Test
-	public void testsShowSearchedPatientsShouldResetTheSearchedPatientListAndAddPatientsDescriptionToTheSearchedPatientListAndResetTheErrorLabel() {
+	public void testsShowSearchedPatientsShouldResetTheSearchedPatientListAndAddPatientsDescriptionToTheSearchedPatientList() {		window.label("errorMessageLabel").requireText(" ");
+
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
 

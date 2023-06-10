@@ -151,10 +151,14 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 	public void testSearchButtonSuccess() {
 		Patient patient = new Patient("1", "test", "10/02/2023");
 		patientRepository.save(patient);
+		GuiActionRunner.execute(
+				() -> patientSwingView.showErrorPatientNotFound("error"));
 		window.textBox("searchNameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Search")).click();
 		assertThat(window.list("searchedPatientsList").contents())
 			.containsExactly("1 - test - 10/02/2023");
+		window.label("errorMessageLabel")
+			.requireText(" ");
 	}
 
 	@Test @GUITest
