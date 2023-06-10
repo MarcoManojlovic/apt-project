@@ -138,7 +138,7 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 
 	@Test
 	public void testWhenSearchNameIsNonEmptyThenSearchButtonShouldBeEnabled() {
-		window.textBox("searchNameTextBox").enterText("test");
+		window.textBox("searchNameTextBox").enterText(" test");
 		window.button(JButtonMatcher.withText("Search")).requireEnabled();
 	}
 
@@ -231,7 +231,7 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.list("searchedPatientsList").selectItem(0);
 		window.list("patientList").requireNoSelection();
 	}
-	
+
 	@Test
 	public void testDeleteButtonWhenAPatientIsSelectedShouldDelegateToHospitalControllerDeletePatient() {
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
@@ -266,8 +266,7 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 	}
 
 	@Test
-	public void testsShowSearchedPatientsShouldResetTheSearchedPatientListAndAddPatientsDescriptionToTheSearchedPatientList() {		window.label("errorMessageLabel").requireText(" ");
-
+	public void testsShowSearchedPatientsShouldResetTheSearchedPatientListAndAddPatientsDescriptionToTheSearchedPatientList() {
 		Patient patient1 = new Patient("1", "test1", "10/02/2023");
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
 
@@ -290,6 +289,4 @@ public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.label("errorMessageLabel")
 			.requireText("error message");
 	}
-
 }
-

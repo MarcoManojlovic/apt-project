@@ -2,6 +2,8 @@ package com.manojlovic.marco.hospital.app.swing;
 
 import java.awt.EventQueue;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.manojlovic.marco.hospital.app.swing.HospitalSwingApp;
 import com.manojlovic.marco.hospital.controller.HospitalController;
@@ -45,7 +47,8 @@ public class HospitalSwingApp implements Callable<Void> {
 				patientView.setVisible(true);
 				hospitalController.allPatients();
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.getLogger(getClass().getName())
+					.log(Level.SEVERE, "Exception", e);
 			}
 		});
 		return null;

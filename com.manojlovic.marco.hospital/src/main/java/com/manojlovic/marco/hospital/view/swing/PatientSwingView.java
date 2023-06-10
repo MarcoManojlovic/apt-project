@@ -138,7 +138,7 @@ public class PatientSwingView extends JFrame implements PatientView {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				btnSearch.setEnabled(
-						!searchNameTextField.getText().isEmpty()
+						!searchNameTextField.getText().trim().isEmpty()
 				);
 			}
 		};
