@@ -36,10 +36,10 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 	private PatientSwingView patientSwingView;
 	private HospitalController hospitalController;
 	private PatientMongoRepository patientRepository;
-	
+
 	private static final String HOSPITAL_DB_NAME = "hospital";
 	private static final String PATIENT_COLLECTION_NAME = "patient";
-	
+
 	@BeforeClass
 	public static void setupServer() {
 		server = new MongoServer(new MemoryBackend());
@@ -59,7 +59,7 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 		for (Patient patient : patientRepository.findAll()) {
 			patientRepository.delete(patient.getId());
 		}
-		
+
 		GuiActionRunner.execute(() -> {
 			patientSwingView = new PatientSwingView();
 			hospitalController = new HospitalController(patientSwingView, patientRepository);
@@ -69,6 +69,7 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 		window = new FrameFixture(robot(), patientSwingView);
 		window.show();
 	}
+
 	@Override
 	protected void onTearDown() {
 		mongoClient.close();
@@ -80,10 +81,8 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 		Patient patient2 = new Patient("2", "test2", "10/02/2023");
 		patientRepository.save(patient1);
 		patientRepository.save(patient2);
-
 		GuiActionRunner.execute(
 			() -> hospitalController.allPatients());
-
 		assertThat(window.list("patientList").contents())
 			.containsExactly("1 - test1 - 10/02/2023", "2 - test2 - 10/02/2023");
 	}

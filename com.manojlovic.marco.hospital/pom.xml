@@ -129,6 +129,24 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>1.14.1</version>
+          <configuration>
+            <targetClasses>
+              <param>com.manojlovic.marco.hospital.controller.*</param>
+              <param>com.manojlovic.marco.hospital.repository.mongo.*</param>
+            </targetClasses>
+            <targetTests>
+              <param>com.manojlovic.marco.hospital.controller.*</param>
+              <param>com.manojlovic.marco.hospital.repository.mongo.*</param>
+            </targetTests>
+            <mutators>
+              <mutator>DEFAULTS</mutator>
+            </mutators>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -219,7 +237,7 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>0.40.2</version>
+        <version>0.42.1</version>
         <configuration>
           <images>
             <image>
@@ -280,6 +298,25 @@
                 <phase>verify</phase>
                 <goals>
                   <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>mutation-testing</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
                 </goals>
               </execution>
             </executions>
