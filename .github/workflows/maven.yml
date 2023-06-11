@@ -12,7 +12,7 @@ jobs:
         java: [ 8, 11 ]
         include:
              - java: 8
-               maven-args: "-DrepoToken=$COVERALLS_REPO_TOKEN"
+               maven-args: "-DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report"
              - java: 11
                maven-args: "sonar:sonar -Dsonar.projectKey=MarcoManojlovic_apt-project"
     
@@ -37,5 +37,5 @@ jobs:
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-      run: xvfb-run mvn verify -Pcoveralls ${{ matrix.maven-args }}
+      run: xvfb-run mvn verify -Pjacoco ${{ matrix.maven-args }}
       working-directory: com.manojlovic.marco.hospital
