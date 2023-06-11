@@ -24,6 +24,7 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -46,14 +47,14 @@ public class PatientSwingView extends JFrame implements PatientView {
 	private JButton btnDelete;
 	private JLabel lblErrorMessage;
 	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane1;
 	
 	private JList<Patient> listPatients;
 	private JList<Patient> listSearchedPatients;
 	private DefaultListModel<Patient> listPatientsModel;
 	private DefaultListModel<Patient> listSearchedPatientsModel;	
 	
-	private HospitalController hospitalController;
+	private transient HospitalController hospitalController;
 
 	DefaultListModel<Patient> getListPatientsModel() {
 		return listPatientsModel;
@@ -72,7 +73,7 @@ public class PatientSwingView extends JFrame implements PatientView {
 	 */
 	public PatientSwingView() {
 		setTitle("Patient View");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 618, 442);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -235,8 +236,8 @@ public class PatientSwingView extends JFrame implements PatientView {
 		listPatients.setName("patientList");
 		scrollPane.setViewportView(listPatients);
 		
-		scrollPane_1 = new JScrollPane();
-		contentPane.add(scrollPane_1, "5, 10, 1, 15, fill, fill");
+		scrollPane1 = new JScrollPane();
+		contentPane.add(scrollPane1, "5, 10, 1, 15, fill, fill");
 		
 		listSearchedPatientsModel = new DefaultListModel<>();
 		listSearchedPatients = new JList<>(listSearchedPatientsModel);
@@ -259,7 +260,7 @@ public class PatientSwingView extends JFrame implements PatientView {
 					index, isSelected, cellHasFocus);
 			}
 		});			
-		scrollPane_1.setViewportView(listSearchedPatients);
+		scrollPane1.setViewportView(listSearchedPatients);
 		
 		lblErrorMessage = new JLabel(" ");
 		lblErrorMessage.setName("errorMessageLabel");
