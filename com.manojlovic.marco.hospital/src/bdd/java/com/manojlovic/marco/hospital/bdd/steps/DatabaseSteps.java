@@ -21,7 +21,7 @@ public class DatabaseSteps {
 	static final String PATIENT_FIXTURE_2_ID = "2";
 	static final String PATIENT_FIXTURE_2_NAME = "patient2";
 	static final String PATIENT_FIXTURE_2_DATE = "11/02/2023";
-	
+
 	private MongoClient mongoClient;
 
 	@Before

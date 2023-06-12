@@ -33,7 +33,7 @@ import java.util.List;
 public class PatientSwingView extends JFrame implements PatientView {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel contentPane;
 	private JTextField idTextField;
 	private JLabel lblName;
@@ -53,7 +53,7 @@ public class PatientSwingView extends JFrame implements PatientView {
 	private JList<Patient> listSearchedPatients;
 	private DefaultListModel<Patient> listPatientsModel;
 	private DefaultListModel<Patient> listSearchedPatientsModel;	
-	
+
 	private transient HospitalController hospitalController;
 
 	DefaultListModel<Patient> getListPatientsModel() {
@@ -63,14 +63,11 @@ public class PatientSwingView extends JFrame implements PatientView {
 	DefaultListModel<Patient> getListSearchedPatientsModel() {
 		return listSearchedPatientsModel;
 	}
-	
+
 	public void setHospitalController(HospitalController hospitalController) {
 		this.hospitalController = hospitalController;
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PatientSwingView() {
 		setTitle("Patient View");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

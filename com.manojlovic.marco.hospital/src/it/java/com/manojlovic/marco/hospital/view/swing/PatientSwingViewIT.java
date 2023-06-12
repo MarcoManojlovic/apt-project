@@ -144,7 +144,7 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 			.isEmpty();
 		window.label("errorMessageLabel")
 			.requireText("No existing patient with id 1: 1 - non existent - 10/02/2023");
-}
+	}
 
 	@Test @GUITest
 	public void testSearchButtonSuccess() {
@@ -168,5 +168,5 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 			.isEmpty();
 		window.label("errorMessageLabel")
 			.requireText("No existing patient with name test");
-	}	
+	}
 }

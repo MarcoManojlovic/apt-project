@@ -76,7 +76,7 @@ public class HospitalControllerTest {
 		verify(patientView)
 			.showError("Already existing patient with id 1", existingPatient);
 		verifyNoMoreInteractions(ignoreStubs(patientRepository));
-	}	
+	}
 
 	@Test
 	public void testDeletePatientWhenPatientExists() {

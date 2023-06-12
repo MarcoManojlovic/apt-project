@@ -28,7 +28,6 @@ import com.manojlovic.marco.hospital.model.Patient;
 @RunWith(GUITestRunner.class)
 public class PatientSwingViewTest extends AssertJSwingJUnitTestCase {
 
-
 	private FrameFixture window;
 
 	private PatientSwingView patientSwingView;	

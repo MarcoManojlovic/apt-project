@@ -36,7 +36,7 @@ public class PatientMongoRepository implements PatientRepository {
 				.map(this::fromDocumentToPatient)
 				.filter(p -> p.getName().contains(name))
 				.collect(Collectors.toList());
-	}	
+	}
 
 	private Patient fromDocumentToPatient(Document d) {
 		return new Patient(""+d.get("id"), ""+d.get("name"), ""+d.get("recoveryDate"));

@@ -73,7 +73,7 @@ public class PatientMongoRepositoryTest {
 				new Patient("1", "test1", "10/02/2023"),
 				new Patient("2", "test2", "10/02/2023"));
 	}
-	
+
 	public void testFindByNameNotFound() {
 		assertThat(patientRepository.findByName("Marco")).isEmpty();
 	}
@@ -87,7 +87,7 @@ public class PatientMongoRepositoryTest {
 				new Patient("1", "Marco", "10/02/2023"),
 				new Patient("2", "Mariangelo", "11/02/2023"));
 	}
-	
+
 	@Test
 	public void testFindByIdNotFound() {
 		assertThat(patientRepository.findById("1")).isNull();

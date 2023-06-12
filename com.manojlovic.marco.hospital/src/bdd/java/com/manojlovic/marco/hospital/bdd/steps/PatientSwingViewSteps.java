@@ -117,5 +117,5 @@ public class PatientSwingViewSteps {
 	public void an_error_is_shown_containing_the_searched_name() {
 	assertThat(window.label("errorMessageLabel").text())
 		.contains("not existing");
-	}	
+	}
 }
