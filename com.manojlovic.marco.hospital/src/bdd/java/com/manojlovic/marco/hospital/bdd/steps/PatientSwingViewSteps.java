@@ -85,10 +85,12 @@ public class PatientSwingViewSteps {
 			.selectItem(Pattern.compile(".*" + DatabaseSteps.PATIENT_FIXTURE_1_ID + ".*"));
 	}
 
-	@Then("The patient is removed from the list")
+	@Then("The patient is removed from both lists")
 	public void the_patient_is_removed_from_the_list() {
 		assertThat(window.list("patientList").contents())
 			.noneMatch(e -> e.contains(DatabaseSteps.PATIENT_FIXTURE_1_NAME));
+		assertThat(window.list("searchedPatientsList").contents())
+		.noneMatch(e -> e.contains(DatabaseSteps.PATIENT_FIXTURE_1_NAME));
 	}
 
 	@Then("An error is shown containing the name of the selected patient")

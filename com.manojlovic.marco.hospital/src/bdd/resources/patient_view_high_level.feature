@@ -18,14 +18,14 @@ Feature: Patient View High Level
   Scenario: Delete a patient
     Given The user selects a patient from the list
     When The user clicks the "Delete Selected" button
-    Then The patient is removed from the list
+    Then The patient is removed from both lists
 
   Scenario: Delete a not existing patient
     Given The user selects a patient from the list
     But The patient is in the meantime removed from the database
     When The user clicks the "Delete Selected" button
     Then An error is shown containing the name of the selected patient
-    And The patient is removed from the list
+    And The patient is removed from both lists
 
   Scenario: Search a patient
     Given The user provides a name in the search name field, specifying an existing name
