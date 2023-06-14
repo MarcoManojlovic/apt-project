@@ -66,12 +66,12 @@ public class PatientMongoRepositoryTest {
 
 	@Test
 	public void testFindAllWhenDatabaseIsNotEmpty() {
-		addTestPatientToDatabase("1", "test1", "10/02/2023");
-		addTestPatientToDatabase("2", "test2", "10/02/2023");
+		addTestPatientToDatabase("1", "test1", "10 02 2023");
+		addTestPatientToDatabase("2", "test2", "10 02 2023");
 		assertThat(patientRepository.findAll())
 			.containsExactly(
-				new Patient("1", "test1", "10/02/2023"),
-				new Patient("2", "test2", "10/02/2023"));
+				new Patient("1", "test1", "10 02 2023"),
+				new Patient("2", "test2", "10 02 2023"));
 	}
 
 	public void testFindByNameNotFound() {
@@ -79,13 +79,13 @@ public class PatientMongoRepositoryTest {
 	}
 
 	public void testFindByNameFound() {
-		addTestPatientToDatabase("1", "Marco", "10/02/2023");
-		addTestPatientToDatabase("2", "Mariangelo", "11/02/2023");
-		addTestPatientToDatabase("3", "Ludovico", "11/02/2023");
+		addTestPatientToDatabase("1", "Marco", "10 02 2023");
+		addTestPatientToDatabase("2", "Mariangelo", "11 02 2023");
+		addTestPatientToDatabase("3", "Ludovico", "11 02 2023");
 		assertThat(patientRepository.findByName("Mar"))
 			.containsExactly(
-				new Patient("1", "Marco", "10/02/2023"),
-				new Patient("2", "Mariangelo", "11/02/2023"));
+				new Patient("1", "Marco", "10 02 2023"),
+				new Patient("2", "Mariangelo", "11 02 2023"));
 	}
 
 	@Test
@@ -95,15 +95,15 @@ public class PatientMongoRepositoryTest {
 
 	@Test
 	public void testFindByIdFound() {
-		addTestPatientToDatabase("1", "test1", "10/02/2023");
-		addTestPatientToDatabase("2", "test2", "10/02/2023");
+		addTestPatientToDatabase("1", "test1", "10 02 2023");
+		addTestPatientToDatabase("2", "test2", "10 02 2023");
 		assertThat(patientRepository.findById("2"))
-			.isEqualTo(new Patient("2", "test2", "10/02/2023"));
+			.isEqualTo(new Patient("2", "test2", "10 02 2023"));
 	}
 
 	@Test
 	public void testSave() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		patientRepository.save(patient);
 		assertThat(readAllPatientsFromDatabase())
 			.containsExactly(patient);
@@ -111,7 +111,7 @@ public class PatientMongoRepositoryTest {
 
 	@Test
 	public void testDelete() {
-		addTestPatientToDatabase("1", "test", "10/02/2023");
+		addTestPatientToDatabase("1", "test", "10 02 2023");
 		patientRepository.delete("1");
 		assertThat(readAllPatientsFromDatabase())
 			.isEmpty();

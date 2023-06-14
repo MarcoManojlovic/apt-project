@@ -77,44 +77,44 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 
 	@Test @GUITest
 	public void testAllPatients() {
-		Patient patient1 = new Patient("1", "test1", "10/02/2023");
-		Patient patient2 = new Patient("2", "test2", "10/02/2023");
+		Patient patient1 = new Patient("1", "test1", "10 02 2023");
+		Patient patient2 = new Patient("2", "test2", "10 02 2023");
 		patientRepository.save(patient1);
 		patientRepository.save(patient2);
 		GuiActionRunner.execute(
 			() -> hospitalController.allPatients());
 		assertThat(window.list("patientList").contents())
-			.containsExactly("1 - test1 - 10/02/2023", "2 - test2 - 10/02/2023");
+			.containsExactly("1 - test1 - 10 02 2023", "2 - test2 - 10 02 2023");
 	}
 
 	@Test @GUITest
 	public void testAddButtonSuccess() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
-		window.textBox("recoveryDateTextBox").enterText("10/02/2023");
+		window.textBox("recoveryDateTextBox").enterText("10 02 2023");
 		window.button(JButtonMatcher.withText("Add")).click();
 		assertThat(window.list("patientList").contents())
-			.containsExactly("1 - test - 10/02/2023");
+			.containsExactly("1 - test - 10 02 2023");
 	}
 
 	@Test @GUITest
 	public void testAddButtonError() {
-		patientRepository.save(new Patient("1", "existing", "10/02/2023"));
+		patientRepository.save(new Patient("1", "existing", "10 02 2023"));
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
-		window.textBox("recoveryDateTextBox").enterText("10/02/2023");
+		window.textBox("recoveryDateTextBox").enterText("10 02 2023");
 		window.button(JButtonMatcher.withText("Add")).click();
 		assertThat(window.list("patientList").contents())
 			.isEmpty();
 		window.label("errorMessageLabel")
 			.requireText("Already existing patient with id 1: "
-					+ "1 - existing - 10/02/2023");
+					+ "1 - existing - 10 02 2023");
 	}
 
 	@Test @GUITest
 	public void testDeleteButtonFromMainListSuccess() {
 		GuiActionRunner.execute(
-			() -> hospitalController.newPatient(new Patient("1", "toremove", "10/02/2023")));
+			() -> hospitalController.newPatient(new Patient("1", "toremove", "10 02 2023")));
 		window.list("patientList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
 		assertThat(window.list("patientList").contents())
@@ -123,7 +123,7 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 
 	@Test @GUITest
 	public void testDeleteButtonFromSearchedPatientsListSuccess() {
-		Patient patient = new Patient("1", "toremove", "10/02/2023");
+		Patient patient = new Patient("1", "toremove", "10 02 2023");
 		patientRepository.save(patient);
 		GuiActionRunner.execute(
 			() -> hospitalController.searchPatient("toremove"));
@@ -135,7 +135,7 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 
 	@Test @GUITest
 	public void testDeleteButtonError() {
-		Patient patient = new Patient("1", "non existent", "10/02/2023");
+		Patient patient = new Patient("1", "non existent", "10 02 2023");
 		GuiActionRunner.execute(
 			() -> patientSwingView.getListPatientsModel().addElement(patient));
 		window.list("patientList").selectItem(0);
@@ -143,19 +143,19 @@ public class PatientSwingViewIT extends AssertJSwingJUnitTestCase{
 		assertThat(window.list("patientList").contents())
 			.isEmpty();
 		window.label("errorMessageLabel")
-			.requireText("No existing patient with id 1: 1 - non existent - 10/02/2023");
+			.requireText("No existing patient with id 1: 1 - non existent - 10 02 2023");
 	}
 
 	@Test @GUITest
 	public void testSearchButtonSuccess() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		patientRepository.save(patient);
 		GuiActionRunner.execute(
 				() -> patientSwingView.showErrorPatientNotFound("error"));
 		window.textBox("searchNameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Search")).click();
 		assertThat(window.list("searchedPatientsList").contents())
-			.containsExactly("1 - test - 10/02/2023");
+			.containsExactly("1 - test - 10 02 2023");
 		window.label("errorMessageLabel")
 			.requireText(" ");
 	}
