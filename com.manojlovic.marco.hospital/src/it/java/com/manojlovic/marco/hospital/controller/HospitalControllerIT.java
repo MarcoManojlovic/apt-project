@@ -55,7 +55,7 @@ public class HospitalControllerIT {
 
 	@Test
 	public void testAllPatients() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		patientRepository.save(patient);
 		hospitalController.allPatients();
 		verify(patientView)
@@ -64,14 +64,14 @@ public class HospitalControllerIT {
 
 	@Test
 	public void testNewPatient() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		hospitalController.newPatient(patient);
 		verify(patientView).patientAdded(patient);
 	}
 
 	@Test
 	public void testDeletePatient() {
-		Patient patientToDelete = new Patient("1", "test", "10/02/2023");
+		Patient patientToDelete = new Patient("1", "test", "10 02 2023");
 		patientRepository.save(patientToDelete);
 		hospitalController.deletePatient(patientToDelete);
 		verify(patientView).patientRemoved(patientToDelete);
@@ -79,8 +79,8 @@ public class HospitalControllerIT {
 
 	@Test
 	public void testSearchPatient() {
-		Patient patientToSearch = new Patient("1", "toSearch", "10/02/2023");
-		Patient patientNotToSearch = new Patient("2", "notToSearch", "10/02/2023");
+		Patient patientToSearch = new Patient("1", "toSearch", "10 02 2023");
+		Patient patientNotToSearch = new Patient("2", "notToSearch", "10 02 2023");
 		patientRepository.save(patientToSearch);
 		patientRepository.save(patientNotToSearch);
 		hospitalController.searchPatient("toSearch");

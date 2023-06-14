@@ -57,7 +57,7 @@ public class HospitalControllerTest {
 
 	@Test
 	public void testNewPatientWhenPatientDoesNotAlreadyExist() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		when(patientRepository.findById("1")).
 			thenReturn(null);
 		HospitalController.newPatient(patient);
@@ -68,8 +68,8 @@ public class HospitalControllerTest {
 
 	@Test
 	public void testNewPatientWhenPatientAlreadyExist() {
-		Patient existingPatient = new Patient("1", "test", "10/02/2023");
-		Patient patientToAdd = new Patient("1","name","20/04/2023");
+		Patient existingPatient = new Patient("1", "test", "10 02 2023");
+		Patient patientToAdd = new Patient("1","name","20 04 2023");
 		when(patientRepository.findById("1")).
 			thenReturn(existingPatient);
 		HospitalController.newPatient(patientToAdd);
@@ -80,7 +80,7 @@ public class HospitalControllerTest {
 
 	@Test
 	public void testDeletePatientWhenPatientExists() {
-		Patient patientToDelete = new Patient("1", "test", "10/02/2023");
+		Patient patientToDelete = new Patient("1", "test", "10 02 2023");
 		when(patientRepository.findById("1")).
 			thenReturn(patientToDelete);
 		HospitalController.deletePatient(patientToDelete);
@@ -91,7 +91,7 @@ public class HospitalControllerTest {
 
 	@Test
 	public void testDeletePatientWhenPatientDoesNotExist() {
-		Patient patient = new Patient("1", "test", "10/02/2023");
+		Patient patient = new Patient("1", "test", "10 02 2023");
 		when(patientRepository.findById("1")).
 			thenReturn(null);
 		HospitalController.deletePatient(patient);
@@ -103,8 +103,8 @@ public class HospitalControllerTest {
 
 	@Test
 	public void testSearchPatientWhenPatientsExists() {
-		Patient patient1 = new Patient("1", "Marco", "10/02/2023");
-		Patient patient2 = new Patient("2", "Marco", "15/03/2023");
+		Patient patient1 = new Patient("1", "Marco", "10 02 2023");
+		Patient patient2 = new Patient("2", "Marco", "15 03 2023");
 		List <Patient> patients = asList(patient1, patient2);
 		when(patientRepository.findByName("Marco")).
 			thenReturn(patients);

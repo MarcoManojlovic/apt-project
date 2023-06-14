@@ -57,20 +57,20 @@ public class PatientSwingViewSteps {
 	public void the_user_provides_patient_data_in_the_text_fields() {
 		window.textBox("idTextBox").enterText("10");
 		window.textBox("nameTextBox").enterText("new patient");
-		window.textBox("recoveryDateTextBox").enterText("10/02/2023");
+		window.textBox("recoveryDateTextBox").enterText("10 02 2023");
 	}
 
 	@Then("The list contains the new patient")
 	public void the_list_contains_the_new_patient() {
 		assertThat(window.list("patientList").contents())
-			.anySatisfy(e -> assertThat(e).contains("10", "new patient", "10/02/2023"));
+			.anySatisfy(e -> assertThat(e).contains("10", "new patient", "10 02 2023"));
 	}
 
 	@Given("The user provides patient data in the text fields, specifying an existing id")
 	public void the_user_provides_patient_data_in_the_text_fields_specifying_an_existing_id() {
 		window.textBox("idTextBox").enterText(DatabaseSteps.PATIENT_FIXTURE_1_ID);
 		window.textBox("nameTextBox").enterText("new patient");
-		window.textBox("recoveryDateTextBox").enterText("10/02/2023");
+		window.textBox("recoveryDateTextBox").enterText("10 02 2023");
 	}
 
 	@Then("An error is shown containing the name of the existing patient")
